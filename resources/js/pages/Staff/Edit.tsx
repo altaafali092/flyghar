@@ -10,10 +10,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BreadcrumbItem } from "@/types"
 import { Upload } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Staff } from "@/types/admin/Staff"
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Staff", href: route("staff.index") },
-    { title: "Create", href: route("staff.create") },
+    { title: "Edit", href: route("staff.create") },
 ]
 
 const genderOptions = {
@@ -21,18 +22,21 @@ const genderOptions = {
     female: "Female",
     other: "Other",
 }
+interface StaffProps{
+    staff:Staff
+}
 
 
-export default function StaffCreate() {
+export default function StaffEdit({staff}:StaffProps) {
     const { data, setData, post, processing, errors } = useForm({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        remark: "",
-        position: "",
-        gender:"",
-        date_of_birth:'',
+        name: staff.name || "",
+        email: staff.email || "",
+        phone:  staff.phone || "",
+        address: staff.address || "",
+        remark: staff.remark || "",
+        position: staff.position || "",
+        gender:staff.gender || "",
+        date_of_birth:staff.date_of_birth || "",
         image: null as File | null,
     })
 
@@ -200,7 +204,7 @@ export default function StaffCreate() {
 
                             <div className="flex justify-start">
                                 <Button type="submit" disabled={processing}>
-                                    Create Staff
+                                    Update Staff
                                 </Button>
                             </div>
                         </form>

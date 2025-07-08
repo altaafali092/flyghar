@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StaffRequest\StoreStaffRequest;
 use App\Models\Staff;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,15 +28,17 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Staff/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStaffRequest $request)
     {
-        //
+     
+        Staff::create($request->validated());
+        return to_route('staff.index');
     }
 
     /**
@@ -49,9 +52,11 @@ class StaffController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Staff $staff)
     {
-        //
+        return Inertia::render('Staff/Edit', [
+            'staff' => $staff,
+        ]);
     }
 
     /**

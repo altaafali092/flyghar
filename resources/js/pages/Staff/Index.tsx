@@ -38,7 +38,9 @@ export default function StaffIndex() {
     const [search, setSearch] = useState("")
 
     const filtered = staffs.data.filter(staff =>
-        staff.name.toLowerCase().includes(search.toLowerCase())
+        staff.name.toLowerCase().includes(search.toLowerCase()) ||
+        staff.email.toLowerCase().includes(search.toLowerCase()) ||
+        staff.position.toLowerCase().includes(search.toLowerCase())
     )
 
     return (

@@ -1,24 +1,36 @@
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { LayoutGrid, Users2Icon } from 'lucide-react';
-import AppLogo from './app-logo';
+import { NavFooter } from '@/components/nav-footer'
+import { NavMain } from '@/components/nav-main'
+import { NavUser } from '@/components/nav-user'
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar'
+import { type NavItem } from '@/types'
+import { Link } from '@inertiajs/react'
+import { LayoutGrid, LucideUserSquare2, Users2Icon } from 'lucide-react'
+import AppLogo from './app-logo'
 
+// Primary nav items
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: '/dashboard',
         icon: LayoutGrid,
     },
+]
+
+const managementNavItems: NavItem[] = [
     {
         title: 'Staff',
-        href: '/staff',
-        icon: Users2Icon,
+        href: route('staff.index'),
+        icon: LucideUserSquare2,
     },
-];
+]
 
 export function AppSidebar() {
     return (
@@ -36,13 +48,19 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                {/* Main Navigation Group */}
+                <SidebarContent>
+
+                    <NavMain items={mainNavItems} label="Platform" />
+                    <NavMain items={managementNavItems} label="other" />
+                </SidebarContent>
             </SidebarContent>
 
             <SidebarFooter>
+                {/* Optional Footer */}
                 {/* <NavFooter items={footerNavItems} className="mt-auto" /> */}
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
-    );
+    )
 }
