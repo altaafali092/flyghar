@@ -18,7 +18,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::latest()->paginate(5); // Adjust per-page if needed
+        $staffs = Staff::latest()->paginate(10); // Adjust per-page if needed
         return Inertia::render('Staff/Index', [
             'staffs' => $staffs,
         ]);
