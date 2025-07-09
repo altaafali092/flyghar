@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StaffRequest\StoreStaffRequest;
+use App\Http\Requests\StaffRequest\UpdateStaffRequest;
 use App\Models\Staff;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 
@@ -16,7 +18,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::latest()->paginate(10); // Adjust per-page if needed
+        $staffs = Staff::latest()->paginate(5); // Adjust per-page if needed
         return Inertia::render('Staff/Index', [
             'staffs' => $staffs,
         ]);
@@ -36,7 +38,7 @@ class StaffController extends Controller
      */
     public function store(StoreStaffRequest $request)
     {
-     
+
         Staff::create($request->validated());
         return to_route('staff.index');
     }
@@ -44,9 +46,11 @@ class StaffController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Staff $staff)
     {
-        //
+        return Inertia::render('Staff/View',[
+            'staff' => $staff,
+        ]);
     }
 
     /**
@@ -59,19 +63,37 @@ class StaffController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
+    public function update(UpdateStaffRequest $request, Staff $staff)
+    {
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            // Delete old image if it exists
+            if ($staff->image && Storage::disk('public')->exists($staff->image)) {
+                Storage::disk('public')->delete($staff->image);
+            }
+            // Store new image
+            $imagePath = $request->file('image')->store('staff_images', 'public');
+            $data['image'] = $imagePath;
+        } else {
+            if (!isset($data['image'])) {
+                unset($data['image']);
+            }
+        }
+
+        $staff->update($data);
+
+        return to_route('staff.index');
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Staff $staff)
     {
-        //
+        if ($staff->getRawOriginal('image')) {
+            Storage::disk('public')->delete($staff->getRawOriginal('image'));
+        }
+        $staff->delete();
+        return back()->with('success', 'Staff deleted successfully.');
     }
 }

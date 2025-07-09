@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import AppLayout from "@/layouts/app-layout"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, } from "@/components/ui/card"
 import { BreadcrumbItem } from "@/types"
 import { Upload } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -14,7 +14,7 @@ import { Staff } from "@/types/admin/Staff"
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Staff", href: route("staff.index") },
-    { title: "Edit", href: route("staff.create") },
+    // { title: "Edit", href: route("staff.create") },
 ]
 
 const genderOptions = {
@@ -22,50 +22,45 @@ const genderOptions = {
     female: "Female",
     other: "Other",
 }
-interface StaffProps{
-    staff:Staff
+interface StaffProps {
+    staff: Staff
 }
 
 
-export default function StaffEdit({staff}:StaffProps) {
-    const { data, setData, post, processing, errors } = useForm({
+export default function StaffEdit({ staff }: StaffProps) {
+    const { data, setData, put, processing, errors } = useForm({
         name: staff.name || "",
         email: staff.email || "",
-        phone:  staff.phone || "",
+        phone: staff.phone || "",
         address: staff.address || "",
         remark: staff.remark || "",
         position: staff.position || "",
-        gender:staff.gender || "",
-        date_of_birth:staff.date_of_birth || "",
+        gender: staff.gender || "",
+        date_of_birth: staff.date_of_birth?.slice(0, 10) || "",
         image: null as File | null,
-    })
 
-    const handleSubmit= (e:any)=> {
-        e.preventDefault()
-        post(route('staff.store'))
-    }
+
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        put(route('staff.update', staff.id)); // This sends a PUT request
+    };
+
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Create Staff" />
-
+            <Head title="Udate Staff" />
             <div className=" p-6">
                 <Card className="rounded-2xl shadow-sm border border-border bg-card">
-                    <CardHeader>
-                        <CardTitle className="text-lg font-semibold">Create New Staff</CardTitle>
-                    </CardHeader>
-
                     <CardContent>
                         <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-
                                 {/* Inside your form */}
                                 <div >
                                     <Label htmlFor="image" className="mb-2 block">
                                         Profile Image
                                     </Label>
-
                                     <div className="flex items-center space-x-4">
                                         <input
                                             id="image"
@@ -74,6 +69,7 @@ export default function StaffEdit({staff}:StaffProps) {
                                             onChange={(e) => setData("image", e.target.files?.[0] ?? null)}
                                             className="hidden"
                                         />
+
                                         <label
                                             htmlFor="image"
                                             className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-white text-sm font-medium cursor-pointer hover:bg-primary/90 transition"
@@ -130,7 +126,7 @@ export default function StaffEdit({staff}:StaffProps) {
                                         <p className="text-sm text-red-500">{errors.gender}</p>
                                     )}
                                 </div>
-                                 <div>
+                                <div>
                                     <Label htmlFor="name">Date of Birth(DOB)  <span className="text-red-500">*</span></Label>
                                     <Input
                                         id="date_of_birth"

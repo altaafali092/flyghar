@@ -11,7 +11,7 @@ class UpdateStaffRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateStaffRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+             'image' => ['nullable', 'image'],
+            'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'max:255'],
+            'date_of_birth' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email'],
+            'phone' => ['nullable', 'string', 'regex:/^(98|97)\d{8}$/'],
+            'address' => ['required', 'string', 'max:255'],
+            'position' => ['required', 'string', 'max:255'],
+            'remark' => ['nullable', 'string'],
         ];
     }
 }
