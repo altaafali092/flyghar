@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -21,14 +22,13 @@ class AuthSeeder extends Seeder
             ['email' => 'admin@admin.com'], // only check by unique field
             [
                 'name' => 'Super Admin',
-                'password' => bcrypt('password'),
+                'password' => Hash::make('password')
             ]
         );
 
 
-        $user->assignRole($superAdminRole);
+         $user->assignRole($superAdminRole);
         $permissions = Permission::all();
-        // Assign all permissions to the superadmin role
         $superAdminRole->syncPermissions($permissions);
     }
 }
