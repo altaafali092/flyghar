@@ -8,7 +8,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/react"
-import { LayoutGrid, Users2Icon, LucideUserSquare2, Plus, UserCheck, UserPlus, UserCheck2Icon, UserCircle, Logs, Minus, ReceiptIndianRupee, FilePlus2, PlusCircleIcon, BadgeIndianRupee, FileSpreadsheetIcon, MusicIcon, FileAxis3D, Mail, MailPlus, MessageCircle, CalendarPlus, PhoneCall, Settings2, Cog, Wrench, LaptopMinimalCheck, LaptopMinimal, Receipt, ReceiptText, LucideUser2 } from "lucide-react"
+import { LayoutGrid, Users2Icon, LucideUserSquare2, Plus, UserCheck, UserPlus, UserCheck2Icon, UserCircle, Logs, Minus, ReceiptIndianRupee, FilePlus2, PlusCircleIcon, BadgeIndianRupee, FileSpreadsheetIcon, MusicIcon, FileAxis3D, Mail, MailPlus, MessageCircle, CalendarPlus, PhoneCall, Settings2, Cog, Wrench, LaptopMinimalCheck, LaptopMinimal, Receipt, ReceiptText, LucideUser2, UserCogIcon } from "lucide-react"
 import AppLogo from "./app-logo"
 import { NavUser } from "@/components/nav-user"
 import { NavMain } from "@/components/nav-main"
@@ -259,6 +259,23 @@ const managementNavItems: NavItem[] = [
             {
                 title: "Goods Group",
                 href: '#',
+                icon: PlusCircleIcon
+            }
+        ]
+    }
+    , {
+        title: 'Role & Permission',
+        href: '#',
+        icon: UserCogIcon,
+        items: [
+            {
+                title: "Role",
+                href: '#',
+                icon: ReceiptText
+            },
+            {
+                title: "Permissions",
+                href: route('permission.index'),
                 icon: PlusCircleIcon
             }
         ]

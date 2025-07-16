@@ -28,6 +28,7 @@ interface StaffProps {
 
 
 export default function StaffEdit({ staff }: StaffProps) {
+    
     const { data, setData, put, processing, errors } = useForm({
         name: staff.name || "",
         email: staff.email || "",

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\StudentEnquiryController;
 use App\Http\Controllers\Staff\StaffController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,6 +15,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
     Route::resource('staff', StaffController::class);
+    Route::resource('student-enquiry', StudentEnquiryController::class);
+
+    
+    Route::resource('permission', PermissionController::class);
 });
 
 require __DIR__.'/settings.php';
