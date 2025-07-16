@@ -1,22 +1,20 @@
 
-
 import { useState } from "react"
 import { Head, Link, router, usePage } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, Pencil, Trash2 } from "lucide-react"
-import { Staff } from "@/types/admin/Staff"
+import { Pencil, Trash2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Pagination from "@/components/pagination"
-
-import AppLayout from '@/layouts/app-layout';
+import AppLayout from '@/layouts/app-layout'
 import { BreadcrumbItem } from "@/types"
-import { Permission } from "@/types/admin/role&permission"
+import { Role } from "@/types/admin/role&permission"
+import useFlashToast from "@/components/useFlashToast"
 
-interface PermissionProps {
-    permissions: {
-        data: Permission[]
+interface RoleIndexProps {
+    roles: {
+        data: Role[]
         current_page: number
         last_page: number
         links: {
@@ -29,50 +27,50 @@ interface PermissionProps {
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Permission',
-        href: route('permission.index'),
+        title: 'Role',
+        href: route('role.index'),
     },
 ]
 
 export default function Index() {
-    const { permissions } = usePage<{ props: PermissionProps }>().props
+    const { roles } = usePage<RoleIndexProps>().props
+    useFlashToast()
+
     const [search, setSearch] = useState("")
 
-
-    const filtered = permissions.data.filter(permission =>
-        permission.name.toLowerCase().includes(search.toLowerCase())
-      
+    const filtered = roles.data.filter((role) =>
+        role.name?.toLowerCase().includes(search.toLowerCase())
     )
 
-    const deletePermission = (permission: Permission) => {
-        if (!window.confirm('Are you sure you want to delete this permission?')) {
-            return;
+    const deleteRole = (role: Role) => {
+        if (!window.confirm('Are you sure you want to delete this role?')) {
+            return
         }
-        router.delete(route('permission.destroy', permission.id), {
+
+        router.delete(route('role.destroy', role.id), {
             preserveScroll: true,
-        });
+        })
     }
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Permission List" />
-            <div className=" p-6">
+            <Head title="Role List" />
+            <div className="p-6">
                 <Card className="rounded-2xl shadow-sm border border-border bg-card">
-
                     <CardHeader>
-                        <CardTitle>Permission List</CardTitle>
+                        <CardTitle>Role List</CardTitle>
                     </CardHeader>
 
                     <CardContent>
                         <div className="flex justify-between mb-4">
                             <Input
                                 type="text"
-                                placeholder="Search staff..."
+                                placeholder="Search role..."
                                 className="w-1/3"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            <Link href="/staff/create">
+                            <Link href={route('role.create')}>
                                 <Button>Add New</Button>
                             </Link>
                         </div>
@@ -82,36 +80,38 @@ export default function Index() {
                                 <TableRow>
                                     <TableHead>#</TableHead>
                                     <TableHead>Name</TableHead>
-                                    <TableHead>Email</TableHead>
-                                    <TableHead>Position</TableHead>
+                                    <TableHead>Permissions</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
 
                             <TableBody>
                                 {filtered.length > 0 ? (
-                                    filtered.map((permission, index) => (
-                                        <TableRow key={permission.id}>
+                                    filtered.map((role, index) => (
+                                        <TableRow key={role.id}>
                                             <TableCell>{index + 1}</TableCell>
+                                            <TableCell>{role.name}</TableCell>
                                             <TableCell>
-                                                <img src={permission.image} alt="" className="h-16 w-16 rounded-full" />
+                                                <div className="flex flex-wrap">
+                                                    {role.permissions?.map((permission) => (
+                                                        <span
+                                                            key={permission.id}
+                                                            className="m-1 bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded"
+                                                        >
+                                                            {permission.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
                                             </TableCell>
-                                            <TableCell>{permission.name}</TableCell>
-                                            <TableCell>{permission.email}</TableCell>
-                                            <TableCell>{permission.position}</TableCell>
+
                                             <TableCell className="text-right space-x-2">
-                                                <Link href={route('permission.show', permission.id)}>
-                                                    <Button size="icon" variant="outline">
-                                                        <Eye className="w-4 h-4" />
-                                                    </Button>
-                                                </Link>
-                                                <Link href={route('permission.edit', permission.id)}>
+                                                <Link href={route('role.edit', role.id)}>
                                                     <Button size="icon" variant="outline">
                                                         <Pencil className="w-4 h-4" />
                                                     </Button>
                                                 </Link>
                                                 <Button
-                                                    onClick={(e) => deletePermission(permission)}
+                                                    onClick={() => deleteRole(role)}
                                                     variant="outline"
                                                     size="icon"
                                                     className="hover:bg-red-400"
@@ -123,15 +123,15 @@ export default function Index() {
                                     ))
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="text-center text-muted-foreground">
-                                            No staff found.
+                                        <TableCell colSpan={3} className="text-center text-muted-foreground">
+                                            No roles found.
                                         </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
                         </Table>
 
-                        <Pagination links={permissions.links} />
+                        <Pagination links={roles.links} />
                     </CardContent>
                 </Card>
             </div>

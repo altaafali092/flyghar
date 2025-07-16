@@ -270,7 +270,7 @@ const managementNavItems: NavItem[] = [
         items: [
             {
                 title: "Role",
-                href: '#',
+                href: route('role.index'),
                 icon: ReceiptText
             },
             {
