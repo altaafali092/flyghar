@@ -1,6 +1,6 @@
 
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Head, Link, router, usePage } from "@inertiajs/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,6 +13,8 @@ import Pagination from "@/components/pagination"
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from "@/types"
 import { Permission } from "@/types/admin/role&permission"
+import toast from "react-hot-toast"
+import useFlashToast from "@/components/useFlashToast"
 
 interface PermissionProps {
     permissions: {
@@ -37,11 +39,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 ]
 
 export default function Index() {
-   const { permissions } = usePage<{permissions: PermissionProps}>().props
-
-
+    const { permissions } = usePage<{ permissions: PermissionProps }>().props
+    useFlashToast()
     const [search, setSearch] = useState("")
-
 
     const filtered = permissions.data.filter((permission: Permission) =>
         permission.name?.toLowerCase().includes(search.toLowerCase())
