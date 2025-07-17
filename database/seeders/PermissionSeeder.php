@@ -21,20 +21,31 @@ class PermissionSeeder extends Seeder
             'delete users',
             'create users',
 
-            'view tasks',
-            'edit tasks',
-            'delete tasks',
-            'create tasks',
 
-            'view projects',
-            'edit projects',
-            'delete projects',
-            'create projects',
 
-            'view roles',
-            'edit roles',
-            'delete roles',
-            'create roles',
+            //others
+
+            'view staff',
+            'edit satff',
+            'delete staff',
+            'create staff',
+
+            'view role',
+            'edit role',
+            'delete role',
+            'create role',
+
+            'view permission',
+            'edit permission',
+            'delete permission',
+            'create permission',
+
+            'view important call',
+            'edit important call',
+            'delete important call',
+            'create important call',
+
+
 
         ];
 
@@ -42,7 +53,5 @@ class PermissionSeeder extends Seeder
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
-
-
     }
 }
