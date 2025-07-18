@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\GoodsGroupController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentEnquiryController;
@@ -18,10 +19,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('staff', StaffController::class);
     Route::resource('student-enquiry', StudentEnquiryController::class);
 
-    
+
     Route::resource('permission', PermissionController::class);
     Route::resource('role', RoleController::class);
+
+    Route::resource('goods-group', GoodsGroupController::class);
+    Route::get('goods-group/{goodsGroup}/update-status', [GoodsGroupController::class,'updateStatus'])->name('goods-group.updateStatus');
 });
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';

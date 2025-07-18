@@ -12,7 +12,7 @@ import { Permission } from "@/types/admin/role&permission"
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "permission", href: route("permission.index") },
-    { title: "Edit", href: route("permission.create") },
+    { title: "Edit", href:'#' },
 ]
 
 

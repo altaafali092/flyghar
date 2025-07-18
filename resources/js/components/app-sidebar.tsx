@@ -258,7 +258,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: "Goods Group",
-                href: '#',
+                href: route('goods-group.index'),
                 icon: PlusCircleIcon
             }
         ]
