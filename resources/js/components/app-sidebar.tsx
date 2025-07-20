@@ -253,7 +253,7 @@ const managementNavItems: NavItem[] = [
         items: [
             {
                 title: "Goods",
-                href: '#',
+                href: route('goods.index'),
                 icon: ReceiptText
             },
             {
