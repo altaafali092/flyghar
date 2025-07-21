@@ -12,18 +12,10 @@ import Pagination from "@/components/pagination"
 
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from "@/types"
+import { PaginatedResponse } from "@/types/admin/pagination"
 
 interface StaffProps {
-    staffs: {
-        data: Staff[]
-        current_page: number
-        last_page: number
-        links: {
-            url: string | null
-            label: string
-            active: boolean
-        }[]
-    }
+    staffs: PaginatedResponse<Staff>
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -112,7 +104,7 @@ export default function StaffIndex() {
                                                     </Button>
                                                 </Link>
                                                 <Button
-                                                    onClick={(e) => deleteStaff(staff)}
+                                                    onClick={() => deleteStaff(staff)}
                                                     variant="outline"
                                                     size="icon"
                                                     className="hover:bg-red-400"

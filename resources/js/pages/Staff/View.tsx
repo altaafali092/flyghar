@@ -7,12 +7,6 @@ import { Label } from "@/components/ui/label"
 import { BreadcrumbItem } from "@/types"
 import { Staff } from "@/types/admin/Staff"
 
-const genderOptions = {
-    male: "Male",
-    female: "Female",
-    other: "Other",
-}
-
 interface StaffProps {
     staff: Staff
 }
