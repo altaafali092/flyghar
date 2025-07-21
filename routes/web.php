@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\GoodsController;
 use App\Http\Controllers\Admin\GoodsGroupController;
 use App\Http\Controllers\Admin\Others\ContactGroupController;
 use App\Http\Controllers\Admin\Others\FeePackageController;
+use App\Http\Controllers\Admin\Others\PaymentMethodController;
 use App\Http\Controllers\Admin\Others\ShiftController;
 use App\Http\Controllers\Admin\Others\WardController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -44,6 +45,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('contact-groups', ContactGroupController::class);
     Route::get('contact-groups/{contactGroup}/update-status', [ContactGroupController::class, 'updateStatus'])->name('contact-groups.updateStatus');
+
+    Route::resource('payment-methods', PaymentMethodController::class);
+    Route::get('payment-methods/{paymentMethod}/update-status', [PaymentMethodController::class, 'updateStatus'])->name('payment-methods.updateStatus');
 
 });
 

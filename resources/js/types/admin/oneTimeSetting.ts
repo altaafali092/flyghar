@@ -29,3 +29,11 @@ export interface ContactGroup{
     contact_detail: string
     is_active: boolean
 }
+
+export interface PaymentMethod {
+    id: number
+    payment_method_name: string
+    payment_method_detail: string
+    is_active: boolean
+    created_at: string
+}

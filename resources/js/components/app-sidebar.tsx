@@ -210,7 +210,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Payment Method',
-                href: '#',
+                href: route('payment-methods.index'),
                 icon: PlusCircleIcon
             },
             {
