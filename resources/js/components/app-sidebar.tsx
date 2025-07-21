@@ -195,7 +195,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Shift',
-                href: '#',
+                href: route('shifts.index'),
                 icon: PlusCircleIcon
             },
             {

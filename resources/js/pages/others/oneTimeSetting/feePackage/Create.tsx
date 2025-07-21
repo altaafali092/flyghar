@@ -129,7 +129,7 @@ export default function GoodsGroupCreate() {
                             {/* Submit Button */}
                             <div className="pt-4">
                                 <Button type="submit" disabled={processing}>
-                                    Create Goods Group
+                                    Create Fee Package
                                 </Button>
                             </div>
                         </form>

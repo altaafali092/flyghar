@@ -7,3 +7,11 @@ export interface FeePackage {
     is_active: boolean
     created_at: string
 }
+
+export interface Shift {
+    id: number
+    shift_name: string
+    shift_detail: string
+    is_active: boolean
+    created_at: string
+}
