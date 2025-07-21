@@ -205,7 +205,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Contact Group',
-                href: '#',
+                href: route('contact-groups.index'),
                 icon: PlusCircleIcon
             },
             {

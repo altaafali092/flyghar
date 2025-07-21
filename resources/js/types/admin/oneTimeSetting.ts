@@ -22,3 +22,10 @@ export interface Ward {
     is_active: boolean
     created_at: string
 }
+
+export interface ContactGroup{
+    id: number
+    contact_name: string
+    contact_detail: string
+    is_active: boolean
+}

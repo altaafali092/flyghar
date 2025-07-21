@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\GoodsController;
 use App\Http\Controllers\Admin\GoodsGroupController;
+use App\Http\Controllers\Admin\Others\ContactGroupController;
 use App\Http\Controllers\Admin\Others\FeePackageController;
 use App\Http\Controllers\Admin\Others\ShiftController;
 use App\Http\Controllers\Admin\Others\WardController;
@@ -40,6 +41,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('wards', WardController::class);
     Route::get('wards/{ward}/update-status', [WardController::class, 'updateStatus'])->name('wards.updateStatus');
+
+    Route::resource('contact-groups', ContactGroupController::class);
+    Route::get('contact-groups/{contactGroup}/update-status', [ContactGroupController::class, 'updateStatus'])->name('contact-groups.updateStatus');
+
 });
 
 require __DIR__ . '/settings.php';
