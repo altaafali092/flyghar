@@ -18,7 +18,7 @@ export default function GoodsGroupCreate() {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         description: "",
-        status: 1,
+       
     })
 
     const handleSubmit = (e: React.FormEvent) => {

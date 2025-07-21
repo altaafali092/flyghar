@@ -13,60 +13,68 @@ import useFlashToast from "@/components/useFlashToast"
 import { BreadcrumbItem } from "@/types"
 import { Goods } from "@/types/admin/goodsgroup"
 import { PaginatedResponse } from "@/types/admin/pagination"
+import { FeePackage } from "@/types/admin/oneTimeSetting"
+import { Switch } from "@/components/ui/switch"
 
 interface GoodsProps {
-    goods: PaginatedResponse<Goods>
+    feePackages: PaginatedResponse<FeePackage>
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Goods",
-        href: route("goods.index"),
+        title: "Fee Packages",
+        href: route("fee-packages.index"),
     },
 ]
 
 export default function GroupIndex() {
-    const { goods } = usePage<{goods: GoodsProps}>().props
-   
+    const { feePackages } = usePage<{ feePackages: GoodsProps }>().props
+
     const [search, setSearch] = useState("")
     useFlashToast()
 
-    const filteredGoods = goods.data.filter((good) =>
-        good.goods_name.toLowerCase().includes(search.toLowerCase()) ||
-        good.goodsGroup?.name.toLowerCase().includes(search.toLowerCase())||
-        good.model_no.toLowerCase().includes(search.toLowerCase())||
-        good.owner.toLowerCase().includes(search.toLowerCase())
-    
+    const filteredfeePackages = feePackages.data.filter((feePackage) =>
+        feePackage.package_name.toLowerCase().includes(search.toLowerCase()) ||
+        feePackage.package_type.toLowerCase().includes(search.toLowerCase()) ||
+        feePackage.remark.toLowerCase().includes(search.toLowerCase()) ||
+        feePackage.created_at.toLowerCase().includes(search.toLowerCase())
+
     )
 
- 
+    const toggleStatus = (id: number) => {
+        router.get(route('fee-packages.updateStatus', id), {}, {
+            preserveScroll: true,
+        })
+    }
 
-    const deleteGoods = (good: Goods) => {
+
+    const deleteFeePackage = (feePackage: FeePackage) => {
         if (!window.confirm("Are you sure you want to delete this goods?")) return
-        router.delete(route("goods.destroy", good.id),
+        router.delete(route("fee-packages.destroy", feePackage.id),
             { preserveScroll: true })
     }
 
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Goods List" />
+            <Head title="Fee Packages List" />
             <div className="p-6">
                 <Card className="rounded-2xl shadow-sm border border-border bg-card">
                     <CardHeader>
-                        <CardTitle>Goods List</CardTitle>
+                        <CardTitle>Fee Pakages List</CardTitle>
                     </CardHeader>
 
                     <CardContent>
                         <div className="flex justify-between mb-4">
                             <Input
                                 type="text"
-                                placeholder="Search goods..."
+                                placeholder="Search fee packages..."
+
                                 className="w-1/3"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            <Link href={route("goods.create")}>
+                            <Link href={route("fee-packages.create")}>
                                 <Button>Add New</Button>
                             </Link>
                         </div>
@@ -75,34 +83,51 @@ export default function GroupIndex() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>#</TableHead>
-                                    <TableHead>Group Name</TableHead>
-                                    <TableHead>Name</TableHead>
-                                    <TableHead>Model No.</TableHead>
+                                    <TableHead>Package Name</TableHead>
+                                    <TableHead>Package Type</TableHead>
+                                    <TableHead>Package Amount</TableHead>
+                                    <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
 
                             <TableBody>
-                                {filteredGoods.length > 0 ? (
-                                    filteredGoods.map((good, index) => (
-                                        <TableRow key={good.id}>
+                                {filteredfeePackages.length > 0 ? (
+                                    filteredfeePackages.map((feePackage, index) => (
+                                        <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{good.goodsGroup?.name ?? "—"}</TableCell>
-                                            <TableCell>{good.goods_name}</TableCell>
-                                            <TableCell>{good.model_no}</TableCell>
+                                            <TableCell>{feePackage.package_name}</TableCell>
+                                            <TableCell>{feePackage.package_type}</TableCell>
+                                            <TableCell>{feePackage.package_amount}</TableCell>
+                                          
+                                           
+
+                                            <TableCell>
+                                                <div className="flex items-center gap-2">
+                                                    <Switch
+                                                        checked={feePackage.is_active}
+                                                        onCheckedChange={() => toggleStatus(feePackage.id)}
+                                                    />
+                                                    <span className={`text-sm font-medium ${feePackage.is_active ? 'text-green-600' : 'text-red-600'}`}>
+                                                        {feePackage.is_active ? 'Active' : 'Inactive'}
+                                                    </span>
+                                                </div>
+                                            </TableCell>
                                             <TableCell className="text-right space-x-2">
-                                                <Link href={route("goods.show", good.id)}>
+                                                <Link href={route("fee-packages.show", feePackage.id)}>
                                                     <Button size="icon" variant="outline">
                                                         <Eye className="w-4 h-4" />
                                                     </Button>
                                                 </Link>
-                                                <Link href={route("goods.edit", good.id)}>
+                                                <Link href={route("fee-packages.edit", feePackage.id)}>
+
+
                                                     <Button size="icon" variant="outline">
                                                         <Pencil className="w-4 h-4" />
                                                     </Button>
                                                 </Link>
                                                 <Button
-                                                    onClick={() => deleteGoods(good)}
+                                                    onClick={() => deleteFeePackage(feePackage)}
                                                     variant="outline"
                                                     size="icon"
                                                     className="hover:bg-red-400"
@@ -122,7 +147,7 @@ export default function GroupIndex() {
                             </TableBody>
                         </Table>
 
-                        <Pagination links={goods.meta.links} />
+                        <Pagination links={feePackages.meta.links} />
                     </CardContent>
                 </Card>
             </div>

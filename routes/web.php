@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\GoodsController;
 use App\Http\Controllers\Admin\GoodsGroupController;
+use App\Http\Controllers\Admin\Others\FeePackageController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\StudentEnquiryController;
@@ -28,7 +29,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('goods-group/{goodsGroup}/update-status', [GoodsGroupController::class,'updateStatus'])->name('goods-group.updateStatus');
 
     Route::resource('goods', GoodsController::class);
-    Route::get('goods/{goods}/update-status', [GoodsController::class,'updateStatus'])->name('goods.updateStatus');
+    
+    Route::resource('fee-packages', FeePackageController::class);
+    Route::get('fee-packages/{feePackage}/update-status', [FeePackageController::class,'updateStatus'])->name('fee-packages.updateStatus');
+    
 });
 
 require __DIR__ . '/settings.php';

@@ -190,7 +190,7 @@ const managementNavItems: NavItem[] = [
         items: [
             {
                 title: 'Fee Package',
-                href: '#',
+                href: route('fee-packages.index'),
                 icon: PlusCircleIcon
             },
             {
