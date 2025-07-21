@@ -20,7 +20,7 @@ const PackageTypes = {
 
 }
 
-export default function GoodsGroupCreate() {
+export default function FeePackageCreate() {
     const { data, setData, post, processing, errors } = useForm({
         package_name: "",
         package_type: "",

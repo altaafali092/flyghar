@@ -11,7 +11,7 @@ import Pagination from "@/components/pagination"
 import AppLayout from "@/layouts/app-layout"
 import useFlashToast from "@/components/useFlashToast"
 import { BreadcrumbItem } from "@/types"
-import { Goods } from "@/types/admin/goodsgroup"
+
 import { PaginatedResponse } from "@/types/admin/pagination"
 import { FeePackage } from "@/types/admin/oneTimeSetting"
 import { Switch } from "@/components/ui/switch"
