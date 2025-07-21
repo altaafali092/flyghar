@@ -4,10 +4,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 
 // Function to get and format current date
-const getCurrentDate = () => {
-    const today = new Date();
-    return today.toLocaleDateString(); // e.g. "9/15/2023"
-};
+
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -17,7 +14,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
-    const currentDate = getCurrentDate();
+    
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
