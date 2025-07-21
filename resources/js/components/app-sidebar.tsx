@@ -200,7 +200,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Ward',
-                href: '#',
+                href: route('wards.index'),
                 icon: PlusCircleIcon
             },
             {

@@ -15,3 +15,10 @@ export interface Shift {
     is_active: boolean
     created_at: string
 }
+
+export interface Ward {
+    id: number
+    ward_name: string
+    is_active: boolean
+    created_at: string
+}
