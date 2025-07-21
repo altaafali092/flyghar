@@ -27,7 +27,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ]
 
-export default function GroupIndex() {
+export default function FeePackageIndex() {
     const { feePackages } = usePage<{ feePackages: GoodsProps }>().props
 
     const [search, setSearch] = useState("")

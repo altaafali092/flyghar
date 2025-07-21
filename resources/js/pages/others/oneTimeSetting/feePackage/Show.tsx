@@ -3,16 +3,23 @@
 import { Head, usePage } from "@inertiajs/react"
 import AppLayout from "@/layouts/app-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { BreadcrumbItem, PageProps } from "@/types"
+import { BreadcrumbItem } from "@/types"
+import { FeePackage } from "@/types/admin/oneTimeSetting"
 
+
+
+interface FeePackageProps{
+    feePackage: FeePackage
+}
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Fee Packages", href: route("fee-packages.index") },
     { title: "View", href: "#" },
 ]
 
-export default function FeePackageShow() {
-    const { props } = usePage<PageProps>()
-    const feePackage = props.feePackage
+export default function FeePackageShow({ feePackage }: FeePackageProps) {
+
+  
+  
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -54,11 +61,4 @@ export default function FeePackageShow() {
     )
 }
 
-function DetailItem({ label, value }: { label: string; value: string }) {
-    return (
-        <div className="space-y-1">
-            <div className="text-muted-foreground font-medium">{label}</div>
-            <div className="text-foreground">{value}</div>
-        </div>
-    )
-}
+
