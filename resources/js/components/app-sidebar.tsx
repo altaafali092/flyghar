@@ -227,7 +227,7 @@ const managementNavItems: NavItem[] = [
         items: [
             {
                 title: 'Main Head',
-                href: '#',
+                href: route('main-heads.index'),
                 icon: PlusCircleIcon
             },
             {
