@@ -4,10 +4,10 @@ namespace App\Enums;
 
 enum AccountGroupEnum: string
 {
-    case AssetsAndProperties = 'assets_and_properties';
-    case CapitalAndLiabilities = 'capital_and_liabilities';
-    case Expenditure = 'expenditure';
-    case Revenue = 'revenue';
+    case AssetsAndProperties = 'Assets And Properties';
+    case CapitalAndLiabilities = 'Capital And Liabilities';
+    case Expenditure = 'Expenditure';
+    case Revenue = 'Revenue';
     
     public static function labels()
     {
