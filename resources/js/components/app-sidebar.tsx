@@ -232,7 +232,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Ledger Head',
-                href: '#',
+                href: route('ledger-heads.index'),
                 icon: PlusCircleIcon
             },
             {

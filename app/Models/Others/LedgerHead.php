@@ -4,24 +4,27 @@ namespace App\Models\Others;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class MainHead extends Model
+class LedgerHead extends Model
 {
     use HasFactory, SoftDeletes;
+
+     protected $with = ['mainHead'];
+
     protected $fillable = [
-        'account_group',
-        'main_head_name',
+        'main_head_id',
+        'ledger_head_name',
         'remark',
         'status',
     ];
+
     protected $casts = [
         'status' => 'boolean',
     ];
-    public function ledgerHeads():HasMany
-    {
-        return $this->hasMany(LedgerHead::class);
-    }
 
+    public function mainHead()
+    {
+        return $this->belongsTo(MainHead::class,);
+    }
 }
