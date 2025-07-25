@@ -13,51 +13,51 @@ import useFlashToast from "@/components/useFlashToast"
 import { BreadcrumbItem } from "@/types"
 import { PaginatedResponse } from "@/types/admin/pagination"
 import { Switch } from "@/components/ui/switch"
-import { LedgerHead } from "@/types/admin/accountSettings"
+import { LedgerHead, SubLedgerHead } from "@/types/admin/accountSettings"
 
 
 interface SubLedgerHeadProps {
-    subLedgerHeads: PaginatedResponse<LedgerHead>
+    subLedgerHeads: PaginatedResponse<SubLedgerHead>
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: "Main Heads",
-        href: route("main-heads.index"),
+        title: "Sub Ledger Heads",
+        href: route("sub-ledger-heads.index"),
     },
 ]
 
 export default function GroupIndex() {
-    const { ledgerHeads } = usePage<{ ledgerHeads: LedgerHeadProps }>().props
+    const { subLedgerHeads } = usePage<{ subLedgerHeads: SubLedgerHeadProps }>().props
+    console.log(subLedgerHeads)
    
     const [search, setSearch] = useState("")
     useFlashToast()
 
-    const filteredLedgerHeads = ledgerHeads.data.filter((ledgerHead) =>
-        ledgerHead.ledger_head_name.toLowerCase().includes(search.toLowerCase())
+    const filteredSubLedgerHeads = subLedgerHeads.data.filter((subLedgerHead) =>
+        subLedgerHead.sub_ledger_head_name.toLowerCase().includes(search.toLowerCase())
     )
 
     const toggleStatus = (id: number) => {
-        router.get(route('ledger-heads.updateStatus', id), {}, {
+        router.get(route('sub-ledger-heads.updateStatus', id), {}, {
             preserveScroll: true,
         })
     }
 
-
-    const deleteLedgerHead = (ledgerHead: LedgerHead) => {
+    const deleteSubLedgerHead = (subLedgerHead: SubLedgerHead) => {
         if (!window.confirm("Are you sure you want to delete this shift?")) return
-        router.delete(route("ledger-heads.destroy", ledgerHead.id),
+        router.delete(route("sub-ledger-heads.destroy", subLedgerHead.id),
             { preserveScroll: true })
     }
 
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Main Head List" />
+            <Head title="Sub Ledger Head List" />
             <div className="p-6">
                 <Card className="rounded-2xl shadow-sm border border-border bg-card">
                     <CardHeader>
-                        <CardTitle>Ledger Head List</CardTitle>
+                        <CardTitle>Sub Ledger Head List</CardTitle>
 
                     </CardHeader>
 
@@ -70,7 +70,7 @@ export default function GroupIndex() {
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            <Link href={route("ledger-heads.create")}>
+                            <Link href={route("sub-ledger-heads.create")}>
                                 <Button>Add New</Button>
                             </Link>
                         </div>
@@ -81,7 +81,8 @@ export default function GroupIndex() {
                                     <TableHead>#</TableHead>
                                     <TableHead>Account Group</TableHead>
                                     <TableHead> Account Main Head</TableHead>
-                                    <TableHead>Ledger Head Name</TableHead>
+                                    <TableHead>Sub Ledger Name</TableHead>
+                                    <TableHead>Sub Ledger Number</TableHead>
                                     <TableHead>Remark</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
@@ -89,34 +90,35 @@ export default function GroupIndex() {
                             </TableHeader>
 
                             <TableBody>
-                                {filteredLedgerHeads.length > 0 ? (
-                                    filteredLedgerHeads.map((ledgerHead, index) => (
+                                {filteredSubLedgerHeads.length > 0 ? (
+                                    filteredSubLedgerHeads.map((subLedgerHead, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{ledgerHead.main_head_id?.account_group}</TableCell>
-                                            <TableCell>{ledgerHead.main_head_id?.main_head_name}</TableCell>
-                                            <TableCell>{ledgerHead.ledger_head_name}</TableCell>
-                                            <TableCell>{ledgerHead.remark}</TableCell>
+                                            <TableCell>{subLedgerHead.ledger_head_id?.main_head_id?.account_group}</TableCell>
+                                            <TableCell>{subLedgerHead.ledger_head_id?.main_head_id?.main_head_name}</TableCell>
+                                            <TableCell>{subLedgerHead.sub_ledger_head_name}</TableCell>
+                                            <TableCell>{subLedgerHead.sub_ledger_head_code}</TableCell>
+                                            <TableCell>{subLedgerHead.remark}</TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-2">
                                                     <Switch
-                                                        checked={ledgerHead.status}
-                                                        onCheckedChange={() => toggleStatus(ledgerHead.id)}
+                                                        checked={subLedgerHead.is_active}
+                                                        onCheckedChange={() => toggleStatus(subLedgerHead.id)}
                                                     />
-                                                    <span className={`text-sm font-medium ${ledgerHead.status ? 'text-green-600' : 'text-red-600'}`}>
-                                                        {ledgerHead.status ? 'Active' : 'Inactive'}
+                                                    <span className={`text-sm font-medium ${subLedgerHead.is_active ? 'text-green-600' : 'text-red-600'}`}>
+                                                        {subLedgerHead.is_active ? 'Active' : 'Inactive'}
                                                     </span>
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right space-x-2">
-                                                <Link href={route("ledger-heads.show", ledgerHead.id)}>
+                                                <Link href={route("sub-ledger-heads.show", subLedgerHead.id)}>
                                                     <Button size="icon" variant="outline"><Eye className="w-4 h-4" /></Button>
                                                 </Link>
-                                                <Link href={route("ledger-heads.edit", ledgerHead.id)}>
+                                                <Link href={route("sub-ledger-heads.edit", subLedgerHead.id)}>
                                                     <Button size="icon" variant="outline"><Pencil className="w-4 h-4" /></Button>
                                                 </Link>
                                                 <Button
-                                                    onClick={() => deleteLedgerHead(ledgerHead)}
+                                                    onClick={() => deleteSubLedgerHead(subLedgerHead)}
                                                     variant="outline"
                                                     size="icon"
                                                     className="hover:bg-red-400"
@@ -137,7 +139,7 @@ export default function GroupIndex() {
 
                         </Table>
 
-                        <Pagination links={ledgerHeads.meta.links} />
+                        <Pagination links={subLedgerHeads.meta.links} />
                     </CardContent>
                 </Card>
             </div>

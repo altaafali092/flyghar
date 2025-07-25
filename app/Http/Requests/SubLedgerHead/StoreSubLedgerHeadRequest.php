@@ -24,7 +24,6 @@ class StoreSubLedgerHeadRequest extends FormRequest
         return [
             'ledger_head_id' => ['required', 'exists:ledger_heads,id'],
             'sub_ledger_head_name' => ['required', 'string', 'max:255'],
-            'sub_ledger_head_code' => ['required', 'string', 'max:255'],
             'remark' => ['nullable', 'string', 'max:255'],
         ];
     }

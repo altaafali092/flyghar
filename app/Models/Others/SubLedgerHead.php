@@ -2,11 +2,15 @@
 
 namespace App\Models\Others;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubLedgerHead extends Model
 {
-    
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'ledger_head_id',
@@ -16,8 +20,9 @@ class SubLedgerHead extends Model
         'is_active',
     ];
 
-    public function ledgerHead():hasMany
+
+    public function ledgerHead(): BelongsTo
     {
-        return $this->hasMany(LedgerHead::class);
+        return $this->belongsTo(LedgerHead::class);
     }
 }
