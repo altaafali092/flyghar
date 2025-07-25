@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Others;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\SubLedgerHead\StoreSubLedgerHeadRequest;
+use App\Http\Requests\SubLedgerHead\UpdateSubLedgerHeadRequest;
+use App\Http\Resources\Others\SubLedgerHeadResource;
+use App\Models\Others\SubLedgerHead;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class SubLedgerHeadController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $subLedgerHeads = SubLedgerHead::latest()->paginate(10);
+        return Inertia::render('others/AccountSetting/SubLedgerHead/Index',[
+            'subLedgerHeads' =>SubLedgerHeadResource::collection($subLedgerHeads)->response()->getData(true),
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return Inertia::render('others/AccountSetting/SubLedgerHead/Create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreSubLedgerHeadRequest $request)
+    {
+        SubLedgerHead::create($request->validated());
+        return to_route('sub-ledger-heads.index')->with('success','Sub Ledger Head created successfully');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(SubLedgerHead $subLedgerHead)
+    {
+        return Inertia::render('others/AccountSetting/SubLedgerHead/Show',[
+            'subLedgerHead' => new SubLedgerHeadResource($subLedgerHead),
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(SubLedgerHead $subLedgerHead)
+    {
+        return Inertia::render('others/AccountSetting/SubLedgerHead/Create',[
+            'subLedgerHead' => $subLedgerHead,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateSubLedgerHeadRequest $request, SubLedgerHead $subLedgerHead)
+    {
+        $subLedgerHead->update($request->validated());
+        return to_route('sub-ledger-heads.index')->with('success','Sub Ledger Head updated successfully');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(SubLedgerHead $subLedgerHead)
+    {
+        $subLedgerHead->delete();
+        return to_route('sub-ledger-heads.index')->with('success','Sub Ledger Head deleted successfully');
+    }
+}

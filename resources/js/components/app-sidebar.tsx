@@ -237,7 +237,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Sub Ledger Head',
-                href: '#',
+                href: route('sub-ledger-heads.index'),
                 icon: PlusCircleIcon
             },
             {

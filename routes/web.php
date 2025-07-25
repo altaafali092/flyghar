@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Others\LedgerHeadController;
 use App\Http\Controllers\Admin\Others\MainHeadController;
 use App\Http\Controllers\Admin\Others\PaymentMethodController;
 use App\Http\Controllers\Admin\Others\ShiftController;
+use App\Http\Controllers\Admin\Others\SubLedgerHeadController;
 use App\Http\Controllers\Admin\Others\WardController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
@@ -56,6 +57,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('ledger-heads', LedgerHeadController::class);
     Route::get('ledger-heads/{ledgerHead}/update-status', [LedgerHeadController::class, 'updateStatus'])->name('ledger-heads.updateStatus');
+
+    Route::resource('sub-ledger-heads', SubLedgerHeadController::class);
+    Route::get('sub-ledger-heads/{subLedgerHead}/update-status', [SubLedgerHeadController::class, 'updateStatus'])->name('sub-ledger-heads.updateStatus');
 
 });
 
