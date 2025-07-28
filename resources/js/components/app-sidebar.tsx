@@ -8,7 +8,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { Link } from "@inertiajs/react"
-import { LayoutGrid, Users2Icon, LucideUserSquare2, Plus, UserCheck, UserPlus, UserCheck2Icon, UserCircle, Logs, Minus, ReceiptIndianRupee, FilePlus2, PlusCircleIcon, BadgeIndianRupee, FileSpreadsheetIcon, MusicIcon, FileAxis3D, Mail, MailPlus, MessageCircle, CalendarPlus, PhoneCall, Settings2, Cog, Wrench, LaptopMinimalCheck, LaptopMinimal, Receipt, ReceiptText, LucideUser2, UserCogIcon } from "lucide-react"
+import { LayoutGrid, Users2Icon, LucideUserSquare2, Plus, UserCheck, UserPlus, UserCheck2Icon, UserCircle, Logs, Minus, ReceiptIndianRupee, FilePlus2, PlusCircleIcon, BadgeIndianRupee, FileSpreadsheetIcon, MusicIcon, FileAxis3D, Mail, MailPlus, MessageCircle, CalendarPlus, PhoneCall, Settings2, Cog, Wrench, LaptopMinimalCheck, LaptopMinimal, Receipt, ReceiptText, LucideUser2, UserCogIcon, Building2 } from "lucide-react"
 import AppLogo from "./app-logo"
 import { NavUser } from "@/components/nav-user"
 import { NavMain } from "@/components/nav-main"
@@ -281,6 +281,23 @@ const managementNavItems: NavItem[] = [
         ]
     }
 ]
+const settingNavItems: NavItem[] = [{
+    title: 'Settings',
+    href: '#',
+    icon: Settings2,
+    items: [
+        {
+            title: "Fiscal Year",
+            href: route('fiscal-year.index'),
+            icon: CalendarPlus,
+        },
+        {
+            title: "Office Settings",
+            herf: '#',
+            icon: Building2
+        }
+    ]
+}]
 
 export function AppSidebar() {
     return (
@@ -302,6 +319,7 @@ export function AppSidebar() {
                 <NavMain items={accountNavItems} label="Account" />
                 <NavMain items={reportNavItems} label="Reports" />
                 <NavMain items={managementNavItems} label="Other" />
+                <NavMain items={settingNavItems} label=" General Setting" />
             </SidebarContent>
 
             <SidebarFooter>
