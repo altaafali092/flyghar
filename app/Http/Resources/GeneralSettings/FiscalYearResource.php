@@ -17,7 +17,7 @@ class FiscalYearResource extends JsonResource
         return [
             'id'=>$this->id,
             'fiscal_year'=>$this->fiscal_year,
-            'status'=>$this->fiscal_year,
+            'status'=>$this->status,
         ];
     }
 }

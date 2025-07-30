@@ -22,7 +22,8 @@ class StoreFiscalYearRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fiscal_year' => ['required', 'date_format:Y', 'digits:4']
+          'fiscal_year' => ['required', 'regex:/^20\d{2}\/\d{2}$/'],
+
         ];
     }
 }

@@ -69,14 +69,14 @@ export default function FiscalYearIndex() {
                         <div className="flex justify-between mb-4">
                             <Input
                                 type="text"
-                                placeholder="Search wards..."
+                                placeholder="Search fiscal years..."
 
 
                                 className="w-1/3"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            <Link href={route("wards.create")}>
+                            <Link href={route("fiscal-year.create")}>
                                 <Button>Add New</Button>
                             </Link>
                         </div>

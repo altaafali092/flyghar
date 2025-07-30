@@ -28,7 +28,7 @@ class FiscalYearController extends Controller
      */
     public function create()
     {
-        return Inertia::render('GenderalSetting/FiscalYear/Create');
+        return Inertia::render('GeneralSetting/FiscalYear/Create');
     }
 
     /**
@@ -80,6 +80,8 @@ class FiscalYearController extends Controller
         $fiscalYear->update([
             'status' => !$fiscalYear->status
         ]);
+
         return back()->with('success', 'Status Updated Successfully');
     }
+    
 }
