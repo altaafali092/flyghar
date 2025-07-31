@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralSettings\FiscalYear\StoreFiscalYearRequest;
 use App\Http\Requests\GeneralSettings\FiscalYear\UpdateFiscalYearRequest;
 use App\Http\Resources\GeneralSettings\FiscalYearResource;
-use App\Models\GeneralSeetting\FiscalYear;
+use App\Models\GeneralSetting\FiscalYear;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

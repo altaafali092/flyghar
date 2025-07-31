@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models\GeneralSeetting;
+namespace App\Models\GeneralSetting;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FiscalYear extends Model
@@ -16,4 +17,9 @@ class FiscalYear extends Model
     protected $casts = [
         'status' => 'boolean'
     ];
+
+    public function officeSettings(): HasMany
+    {
+        return $this->hasMany(FiscalYear::class);
+    }
 }
