@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('office_settings', function (Blueprint $table) {
             $table->id();
+            $table->string('office_name');
+            $table->string('office_address');
+            $table->string('office_image')->nullable();
+            $table->string('office_cover')->nullable();
+            $table->string('office_phone')->nullable();
+            $table->string('office_gmail')->nullable();
+            $table->string('fb_url')->nullable();
+            $table->string('insta_url')->nullable();
+            $table->string('youtube_url')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

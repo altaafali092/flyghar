@@ -2,6 +2,7 @@
 
 namespace App\Models\GeneralSetting;
 
+use App\Traits\FileTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OfficeSetting extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes,FileTrait;
 
     protected $fillable = [
         'fiscal_year_id',

@@ -11,7 +11,7 @@ class StoreOfficeSettingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class StoreOfficeSettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'fiscal_year_id' => ['required', 'exists:fiscal_years,id'],
+            'office_name' => ['required', 'string'],
+            'office_address' => ['required', 'string'],
+            'office_image' => ['required', 'image', 'max:2048'],
+            'office_cover' => ['nullable', 'image', 'max:2048'],
+            'office_phone' => ['nullable', 'string', 'regex:/^(98|97)\d{8}$/'],
+            'office_gmail' => ['nullable', 'gmail'],
+            'fb_url' => ['nullable', 'url'],
+            'insta_url' => ['nullable', 'url'],
+            'youtube_url' => ['nullable', 'url'],
         ];
     }
 }

@@ -26,6 +26,8 @@ class OfficeSettingResource extends JsonResource
             'fb_url' => $this->fb_url,
             'insta_url' => $this->insta_url,
             'youtube_url' => $this->youtube_url,
+            'created_by'=>$this->created_by
+            
         ];
     }
 }

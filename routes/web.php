@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\GeneralSettings\FiscalYearController;
+use App\Http\Controllers\Admin\GeneralSettings\OfficeSettingController;
 use App\Http\Controllers\Admin\GoodsController;
 use App\Http\Controllers\Admin\GoodsGroupController;
 use App\Http\Controllers\Admin\Others\ContactGroupController;
@@ -64,6 +65,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('fiscal-year',FiscalYearController::class);
     Route::get('fiscal-year/{fiscalYear}/update-status',[FiscalYearController::class,'updateStatus'])->name('fiscal-year.updateStatus');
+
+    Route::resource('office-settings', OfficeSettingController::class);
 
 });
 

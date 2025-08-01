@@ -293,7 +293,7 @@ const settingNavItems: NavItem[] = [{
         },
         {
             title: "Office Settings",
-            herf: '#',
+            href: route('office-settings.index'),
             icon: Building2
         }
     ]
