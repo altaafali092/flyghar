@@ -16,7 +16,7 @@ class OfficeSettingResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'office_setting_id' => new FiscalYearResource($this->fiscalYears),
+            'fiscal_year_id' => $this->fiscal_year_id,
             'office_name' => $this->office_name,
             'office_address' => $this->office_address,
             'office_image' => $this->office_image,

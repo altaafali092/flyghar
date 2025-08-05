@@ -11,7 +11,7 @@ export interface OfficeSettings {
     office_image: string,
     office_cover: string,
     office_phone: string,
-    office_email: string,
+    office_gmail: string,
     fb_url: string,
     insta_url: string,
     youtube_url: string,

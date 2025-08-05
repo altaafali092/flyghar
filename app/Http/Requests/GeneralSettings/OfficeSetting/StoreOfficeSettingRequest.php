@@ -28,7 +28,7 @@ class StoreOfficeSettingRequest extends FormRequest
             'office_image' => ['required', 'image', 'max:2048'],
             'office_cover' => ['nullable', 'image', 'max:2048'],
             'office_phone' => ['nullable', 'string', 'regex:/^(98|97)\d{8}$/'],
-            'office_gmail' => ['nullable', 'gmail'],
+            'office_gmail' => ['nullable','email'],
             'fb_url' => ['nullable', 'url'],
             'insta_url' => ['nullable', 'url'],
             'youtube_url' => ['nullable', 'url'],

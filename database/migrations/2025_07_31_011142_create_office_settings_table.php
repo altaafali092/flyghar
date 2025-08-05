@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('fb_url')->nullable();
             $table->string('insta_url')->nullable();
             $table->string('youtube_url')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
+        
             $table->softDeletes();
             $table->timestamps();
         });

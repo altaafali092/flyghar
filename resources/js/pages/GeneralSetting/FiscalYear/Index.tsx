@@ -12,13 +12,12 @@ import AppLayout from "@/layouts/app-layout"
 import useFlashToast from "@/components/useFlashToast"
 import { BreadcrumbItem } from "@/types"
 import { PaginatedResponse } from "@/types/admin/pagination"
-import { Ward } from "@/types/admin/oneTimeSetting"
 import { Switch } from "@/components/ui/switch"
 import { FiscalYear } from "@/types/admin/generalSettings"
 
 
 interface FiscalYearProps {
-    wards: PaginatedResponse<FiscalYear>
+    fiscalYears: PaginatedResponse<FiscalYear>
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,16 +28,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 ]
 
 export default function FiscalYearIndex() {
-    const { fiscalYears } = usePage<{ fiscalYears: FiscalYearProps }>().props
+    const { fiscalYears } = usePage<{ fiscalYears: PaginatedResponse<FiscalYear> }>().props
 
     const [search, setSearch] = useState("")
     useFlashToast()
 
     const filteredFiscalYears = fiscalYears.data.filter((fiscalYear) =>
         fiscalYear.fiscal_year.toLowerCase().includes(search.toLowerCase())
-
-
-
     )
 
     const toggleStatus = (id: number) => {
@@ -46,8 +42,6 @@ export default function FiscalYearIndex() {
             preserveScroll: true,
         })
     }
-
-
 
     const deleteFiscalYear = (fiscalYear: FiscalYear) => {
         if (!window.confirm("Are you sure you want to delete this Fiscal Year?")) return
@@ -70,8 +64,6 @@ export default function FiscalYearIndex() {
                             <Input
                                 type="text"
                                 placeholder="Search fiscal years..."
-
-
                                 className="w-1/3"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -85,7 +77,7 @@ export default function FiscalYearIndex() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>#</TableHead>
-                                    <TableHead>Fiscal </TableHead>
+                                    <TableHead>Fiscal Year</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
@@ -109,7 +101,6 @@ export default function FiscalYearIndex() {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right space-x-2">
-                                                
                                                 <Link href={route("fiscal-year.edit", fiscalYear.id)}>
                                                     <Button size="icon" variant="outline"><Pencil className="w-4 h-4" /></Button>
                                                 </Link>
@@ -127,12 +118,11 @@ export default function FiscalYearIndex() {
                                 ) : (
                                     <TableRow>
                                         <TableCell colSpan={5} className="text-center text-muted-foreground">
-                                            No shifts found.
+                                            No fiscal years found.
                                         </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
-
                         </Table>
 
                         <Pagination links={fiscalYears.meta.links} />

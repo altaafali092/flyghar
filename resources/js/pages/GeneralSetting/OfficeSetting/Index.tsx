@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { BreadcrumbItem } from "@/types"
 import { Upload } from "lucide-react"
 import { OfficeSettings, FiscalYear } from "@/types/admin/generalSettings"
+import useFlashToast from "@/components/useFlashToast"
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: "Office Setting", href: route("office-settings.index") },
@@ -22,11 +23,12 @@ interface Props {
 
 export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) {
     const isEdit = Boolean(officeSetting?.id)
+    useFlashToast()
 
     const { data, setData, post, processing, errors } = useForm({
         fiscal_year_id: officeSetting.fiscal_year_id || "",
         office_name: officeSetting.office_name || "",
-        office_email: officeSetting.office_email || "",
+        office_gmail: officeSetting.office_gmail || "",
         office_image: null as File | null,
         office_cover: null as File | null,
         office_phone: officeSetting.office_phone || "",
@@ -92,13 +94,28 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
 
                                 {/* Office Cover Upload */}
                                 <div>
-                                    <Label htmlFor="office_cover">Office Cover</Label>
-                                    <Input
-                                        id="office_cover"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={(e) => setData("office_cover", e.target.files?.[0] ?? null)}
-                                    />
+                                    <Label htmlFor="office_cover" className="mb-2 block">Office Cover</Label>
+                                    <div className="flex items-center space-x-4">
+                                        <input
+                                            id="office_cover"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => setData("office_cover", e.target.files?.[0] ?? null)}
+                                            className="hidden"
+                                        />
+                                        <label
+                                            htmlFor="office_cover"
+                                            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-white text-sm font-medium cursor-pointer hover:bg-primary/90 transition"
+                                        >
+                                            <Upload className="w-4 h-4" />
+                                            Upload Cover
+                                        </label>
+                                        {data.office_cover && (
+                                            <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+                                                {(data.office_cover as File).name}
+                                            </span>
+                                        )}
+                                    </div>
                                     {officeSetting.office_cover && !data.office_cover && (
                                         <img
                                             src={officeSetting.office_cover}
@@ -107,7 +124,7 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
                                         />
                                     )}
                                     {errors.office_cover && (
-                                        <p className="text-sm text-red-500">{errors.office_cover}</p>
+                                        <p className="text-sm text-red-500 mt-1">{errors.office_cover}</p>
                                     )}
                                 </div>
 
@@ -135,41 +152,73 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
                                 {/* Input Fields */}
                                 <div>
                                     <Label htmlFor="office_name">Office Name <span className="text-red-500">*</span></Label>
-                                    <Input id="office_name" value={data.office_name} onChange={(e) => setData("office_name", e.target.value)} />
+                                    <Input
+                                        id="office_name"
+                                        value={data.office_name}
+                                        onChange={(e) => setData("office_name", e.target.value)}
+                                    />
                                     {errors.office_name && <p className="text-sm text-red-500">{errors.office_name}</p>}
                                 </div>
 
                                 <div>
-                                    <Label htmlFor="office_email">Email <span className="text-red-500">*</span></Label>
-                                    <Input id="office_email" type="email" value={data.office_email} onChange={(e) => setData("office_email", e.target.value)} />
-                                    {errors.office_email && <p className="text-sm text-red-500">{errors.office_email}</p>}
+                                    <Label htmlFor="office_gmail">Email <span className="text-red-500">*</span></Label>
+                                    <Input 
+                                        id="office_gmail" 
+                                        type="email" 
+                                        value={data.office_gmail} 
+                                        onChange={(e) => setData("office_gmail", e.target.value)} 
+                                    />
+                                    {errors.office_gmail && <p className="text-sm text-red-500">{errors.office_gmail}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="office_phone">Phone <span className="text-red-500">*</span></Label>
-                                    <Input id="office_phone" value={data.office_phone} onChange={(e) => setData("office_phone", e.target.value)} />
+                                    <Input 
+                                        id="office_phone" 
+                                        value={data.office_phone} 
+                                        onChange={(e) => setData("office_phone", e.target.value)} 
+                                    />
                                     {errors.office_phone && <p className="text-sm text-red-500">{errors.office_phone}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="office_address">Address <span className="text-red-500">*</span></Label>
-                                    <Input id="office_address" value={data.office_address} onChange={(e) => setData("office_address", e.target.value)} />
+                                    <Input 
+                                        id="office_address" 
+                                        value={data.office_address} 
+                                        onChange={(e) => setData("office_address", e.target.value)} 
+                                    />
                                     {errors.office_address && <p className="text-sm text-red-500">{errors.office_address}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="fb_url">Facebook</Label>
-                                    <Input id="fb_url" value={data.fb_url} onChange={(e) => setData("fb_url", e.target.value)} />
+                                    <Input 
+                                        id="fb_url" 
+                                        value={data.fb_url} 
+                                        onChange={(e) => setData("fb_url", e.target.value)} 
+                                    />
+                                    {errors.fb_url && <p className="text-sm text-red-500">{errors.fb_url}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="insta_url">Instagram</Label>
-                                    <Input id="insta_url" value={data.insta_url} onChange={(e) => setData("insta_url", e.target.value)} />
+                                    <Input 
+                                        id="insta_url" 
+                                        value={data.insta_url} 
+                                        onChange={(e) => setData("insta_url", e.target.value)} 
+                                    />
+                                    {errors.insta_url && <p className="text-sm text-red-500">{errors.insta_url}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="youtube_url">YouTube</Label>
-                                    <Input id="youtube_url" value={data.youtube_url} onChange={(e) => setData("youtube_url", e.target.value)} />
+                                    <Input 
+                                        id="youtube_url" 
+                                        value={data.youtube_url} 
+                                        onChange={(e) => setData("youtube_url", e.target.value)} 
+                                    />
+                                    {errors.youtube_url && <p className="text-sm text-red-500">{errors.youtube_url}</p>}
                                 </div>
                             </div>
 

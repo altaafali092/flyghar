@@ -32,7 +32,7 @@ class OfficeSetting extends Model
         return $this->castingFile(defaultPath: 'office/officeImage');
     }
 
-    public function coverImage(): Attribute
+    public function officeCover(): Attribute
     {
         return $this->castingfile(defaultPath: 'office/coverImage');
     }
