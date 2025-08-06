@@ -242,7 +242,7 @@ const managementNavItems: NavItem[] = [
             },
             {
                 title: 'Openning Balance',
-                href: '#',
+                href: route('opening-balance.index'),
                 icon: PlusCircleIcon
             },
         ]

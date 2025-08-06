@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Others\ContactGroupController;
 use App\Http\Controllers\Admin\Others\FeePackageController;
 use App\Http\Controllers\Admin\Others\LedgerHeadController;
 use App\Http\Controllers\Admin\Others\MainHeadController;
+use App\Http\Controllers\Admin\Others\OpeningBalanceController;
 use App\Http\Controllers\Admin\Others\PaymentMethodController;
 use App\Http\Controllers\Admin\Others\ShiftController;
 use App\Http\Controllers\Admin\Others\SubLedgerHeadController;
@@ -22,6 +23,8 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+
+Route::resource('office-settings', OfficeSettingController::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
@@ -63,11 +66,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('sub-ledger-heads', SubLedgerHeadController::class);
     Route::get('sub-ledger-heads/{subLedgerHead}/update-status', [SubLedgerHeadController::class, 'updateStatus'])->name('sub-ledger-heads.updateStatus');
 
-    Route::resource('fiscal-year',FiscalYearController::class);
-    Route::get('fiscal-year/{fiscalYear}/update-status',[FiscalYearController::class,'updateStatus'])->name('fiscal-year.updateStatus');
+    Route::resource('fiscal-year', FiscalYearController::class);
+    Route::get('fiscal-year/{fiscalYear}/update-status', [FiscalYearController::class, 'updateStatus'])->name('fiscal-year.updateStatus');
 
-    Route::resource('office-settings', OfficeSettingController::class);
 
+
+    Route::resource('opening-balance', OpeningBalanceController::class);
 });
 
 require __DIR__ . '/settings.php';

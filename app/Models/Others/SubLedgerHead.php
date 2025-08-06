@@ -25,4 +25,9 @@ class SubLedgerHead extends Model
     {
         return $this->belongsTo(LedgerHead::class);
     }
+
+    public function openingBalances(): HasMany
+    {
+        return $this->hasMany(OpeningBalance::class);
+    }
 }

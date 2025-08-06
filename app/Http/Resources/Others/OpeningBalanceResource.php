@@ -12,8 +12,17 @@ class OpeningBalanceResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+   
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'sub_ledger_head_id' => $this->sub_ledger_head_id,
+            'fiscal_year'=>$this->fiscal_year,
+            'image'=>$this->image,
+            'credit' => $this->credit,
+            'debit' => $this->debit,
+            'remark' => $this->remark,
+        ];
     }
 }

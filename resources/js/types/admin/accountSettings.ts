@@ -23,3 +23,12 @@ export interface SubLedgerHead {
     status: boolean
 
 }
+export interface OpeningBalance {
+    id: number
+    sub_ledger_head_id: SubLedgerHead | null
+    fiscal_year: number
+    debit:string
+    credit:string
+    
+    status: boolean
+}

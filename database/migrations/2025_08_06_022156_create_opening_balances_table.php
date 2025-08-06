@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sub_ledger_head_id')->constrained()->onDelete('cascade');
             $table->string('image')->nullable();
+            $table->foreignId('fiscal_year_id')->constrained()->onDelete('cascade');
+            $table->decimal('credit', 10, 2)->default(0);
+            $table->decimal('debit', 10, 2)->default(0);
+            $table->text('remark')->nullable();
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
