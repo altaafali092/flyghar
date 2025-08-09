@@ -2,18 +2,17 @@
 
 namespace App\Helpers;
 
+use App\Models\GeneralSetting\OfficeSetting;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class Helper
 {
 
-    // public static function getMainSetting()
-    // {
-    //     return Cache::get('main_setting', function (){
-    //         return Setting::latest()->first();
-    //     });
-    // }
+
+
+
 
     public function deleteFile($filePath, $disk = 'public')
     {
@@ -52,6 +51,13 @@ if (!function_exists('deleteFile')) {
             }
 
             return Arr::undot($requestFile);
+        }
+    }
+
+    if (!function_exists('officeSettings')) {
+        function officeSettings()
+        {
+            return OfficeSetting::latest()->first();
         }
     }
 }

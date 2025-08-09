@@ -25,10 +25,11 @@ export interface SubLedgerHead {
 }
 export interface OpeningBalance {
     id: number
+    voucher_no: string
+    image: string
     sub_ledger_head_id: SubLedgerHead | null
     fiscal_year: number
     debit:string
     credit:string
-    
-    status: boolean
+    is_active: boolean
 }

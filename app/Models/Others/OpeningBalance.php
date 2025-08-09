@@ -20,7 +20,10 @@ class OpeningBalance extends Model
         'debit',
         'credit',
         'created_by',
-
+        'is_active',
+    ];
+    protected $casts = [
+        'is_active' => 'boolean'
     ];
 
 

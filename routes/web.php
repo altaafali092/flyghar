@@ -72,6 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     Route::resource('opening-balance', OpeningBalanceController::class);
+    Route::get('opening-balance/{openingBalance}/update-status', [OpeningBalanceController::class, 'updateStatus'])->name('opening-balance.updateStatus');
 });
 
 require __DIR__ . '/settings.php';

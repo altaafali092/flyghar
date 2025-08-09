@@ -11,7 +11,7 @@ class StoreOpeningBalanceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,14 @@ class StoreOpeningBalanceRequest extends FormRequest
      */
     public function rules(): array
     {
+       
         return [
-            //
+            'rows' => ['required', 'array', 'min:1'],
+            'rows.*.sub_ledger_head_id' => ['required', 'exists:sub_ledger_heads,id'],
+            'rows.*.debit' => ['nullable', 'numeric', 'min:0', 'required_without:rows.*.credit'],
+            'rows.*.credit' => ['nullable', 'numeric', 'min:0', 'required_without:rows.*.debit'],
         ];
+    
+    
     }
 }

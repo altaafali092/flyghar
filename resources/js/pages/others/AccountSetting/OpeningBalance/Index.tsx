@@ -30,7 +30,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function OpeningBalanceIndex() {
     const { openingBalances } = usePage<{ openingBalances: OpeningBalanceProps }>().props
     console.log(openingBalances)
-   
+
     const [search, setSearch] = useState("")
     useFlashToast()
 
@@ -80,11 +80,13 @@ export default function OpeningBalanceIndex() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>#</TableHead>
-                                    <TableHead>Account Group</TableHead>
-                                    <TableHead> Account Main Head</TableHead>
+                                    <TableHead>Fiscal Year</TableHead>
+                                    <TableHead>Voucher No.</TableHead>
+                                    <TableHead>Image</TableHead>
                                     <TableHead>Sub Ledger Name</TableHead>
-                                    <TableHead>Sub Ledger Number</TableHead>
-                                    <TableHead>Remark</TableHead>
+                                    <TableHead>Debit</TableHead>
+                                    <TableHead>Credit</TableHead>
+                                    <TableHead>Date</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
@@ -95,11 +97,18 @@ export default function OpeningBalanceIndex() {
                                     filteredOpeningBalances.map((openingBalance, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{index + 1}</TableCell>
-                                            <TableCell>{openingBalance.ledger_head_id?.main_head_id?.account_group}</TableCell>
-                                            <TableCell>{openingBalance.ledger_head_id?.main_head_id?.main_head_name}</TableCell>
+                                            <TableCell>{openingBalance.fiscal_year}</TableCell>
+
+                                            <TableCell>{openingBalance.voucher_no}</TableCell>
+                                            <TableCell>
+                                                <img src={openingBalance.image} alt={openingBalance.voucher_no} className="w-12 h-12 rounded-md" />
+                                            </TableCell>
+
+                                            <TableCell>{openingBalance.sub_ledger_head_id?.sub_ledger_head_name}</TableCell>
                                             <TableCell>{openingBalance.debit}</TableCell>
                                             <TableCell>{openingBalance.credit}</TableCell>
-                                            <TableCell>{openingBalance.remark}</TableCell>
+                                            <TableCell>{new Date(openingBalance.created_at).toLocaleDateString()}</TableCell>
+
                                             <TableCell>
                                                 <div className="flex items-center gap-2">
                                                     <Switch
@@ -115,7 +124,7 @@ export default function OpeningBalanceIndex() {
                                                 <Link href={route("sub-ledger-heads.show", openingBalance.id)}>
                                                     <Button size="icon" variant="outline"><Eye className="w-4 h-4" /></Button>
                                                 </Link>
-                                                <Link href={route("sub-ledger-heads.edit", openingBalance.id)}>
+                                                <Link href={route("opening-balance.edit", openingBalance.id)}>
                                                     <Button size="icon" variant="outline"><Pencil className="w-4 h-4" /></Button>
                                                 </Link>
                                                 <Button
