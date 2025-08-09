@@ -44,12 +44,15 @@ export default function OpeningBalanceIndex() {
             preserveScroll: true,
         })
     }
+    
 
     const deleteOpeningBalance = (openingBalance: OpeningBalance) => {
         if (!window.confirm("Are you sure you want to delete this shift?")) return
-        router.delete(route("opening-balances.destroy", openingBalance.id),
+        router.delete(route("opening-balance.destroy", openingBalance.id),
             { preserveScroll: true })
     }
+
+    
 
 
     return (
@@ -104,7 +107,7 @@ export default function OpeningBalanceIndex() {
                                                 <img src={openingBalance.image} alt={openingBalance.voucher_no} className="w-12 h-12 rounded-md" />
                                             </TableCell>
 
-                                            <TableCell>{openingBalance.sub_ledger_head_id?.sub_ledger_head_name}</TableCell>
+                                            <TableCell>{openingBalance.subLedgerHead?.sub_ledger_head_name}</TableCell>
                                             <TableCell>{openingBalance.debit}</TableCell>
                                             <TableCell>{openingBalance.credit}</TableCell>
                                             <TableCell>{new Date(openingBalance.created_at).toLocaleDateString()}</TableCell>

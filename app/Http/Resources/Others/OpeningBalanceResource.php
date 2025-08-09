@@ -28,6 +28,10 @@ class OpeningBalanceResource extends JsonResource
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'is_active' => $this->is_active,
             'created_by' => $this->created_by,
+            'subLedgerHead' => [
+                'id' => $this->subLedgerHead?->id,
+                'sub_ledger_head_name' => $this->subLedgerHead?->sub_ledger_head_name,
+            ],
         ];
     }
 }

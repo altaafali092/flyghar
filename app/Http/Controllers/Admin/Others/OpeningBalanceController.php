@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Others;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OpeningBalance\StoreOpeningBalanceRequest;
+use App\Http\Requests\OpeningBalance\UpdateOpeningBalanceRequest;
 use App\Http\Resources\Others\OpeningBalanceResource;
 use App\Models\GeneralSetting\OfficeSetting;
 use App\Models\Others\OpeningBalance;
@@ -33,7 +34,7 @@ class OpeningBalanceController extends Controller
     public function create()
     {
         $subLedgerHeads = SubLedgerHead::where('is_active', 1)->get();
-         $fiscalYear = officeSettings()->fiscal_year_id;
+        $fiscalYear = officeSettings()->fiscal_year_id;
         return Inertia::render('others/AccountSetting/OpeningBalance/Create', [
             'subLedgerHeads' => $subLedgerHeads,
             'fiscalYear' => $fiscalYear,
@@ -61,7 +62,7 @@ class OpeningBalanceController extends Controller
         foreach ($request->rows as $row) {
             OpeningBalance::create([
                 'voucher_no' => $voucherNo,
-                  'fiscal_year' => $fiscalYearId,
+                'fiscal_year' => $fiscalYearId,
                 'sub_ledger_head_id' => $row['sub_ledger_head_id'],
                 'debit' => $row['debit'] ?? 0,
                 'credit' => $row['credit'] ?? 0,
@@ -98,10 +99,18 @@ class OpeningBalanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateOpeningBalanceRequest $request, OpeningBalance $openingBalance)
     {
-        //
+        $openingBalance->update([
+            ...$request->validated(),
+            'updated_by' => Auth::user()->id,
+        ]);
+
+        return redirect()->route('opening-balance.index')
+            ->with('success', 'Opening balance updated successfully');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
