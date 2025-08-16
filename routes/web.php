@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\GoodsController;
 use App\Http\Controllers\Admin\GoodsGroupController;
 use App\Http\Controllers\Admin\Others\ContactGroupController;
 use App\Http\Controllers\Admin\Others\FeePackageController;
+use App\Http\Controllers\Admin\Others\ImpContactController;
 use App\Http\Controllers\Admin\Others\LedgerHeadController;
 use App\Http\Controllers\Admin\Others\MainHeadController;
 use App\Http\Controllers\Admin\Others\OpeningBalanceController;
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('opening-balance', OpeningBalanceController::class);
     Route::get('opening-balance/{openingBalance}/update-status', [OpeningBalanceController::class, 'updateStatus'])->name('opening-balance.updateStatus');
+
+    Route::resource('imp-contacts', ImpContactController::class);
+    Route::get('imp-contacts/{impContact}/update-status', [ImpContactController::class, 'updateStatus'])->name('imp-contacts.updateStatus');
 });
 
 require __DIR__ . '/settings.php';

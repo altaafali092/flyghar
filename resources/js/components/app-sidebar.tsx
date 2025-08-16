@@ -180,7 +180,7 @@ const managementNavItems: NavItem[] = [
     },
     {
         title: "Important Contact",
-        href: route("staff.index"),
+        href: route("imp-contacts.index"),
         icon: PhoneCall,
     },
     {
