@@ -77,9 +77,13 @@ class OpeningBalanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(OpeningBalance $openingBalance)
     {
-        //
+
+        return Inertia::render('others/AccountSetting/OpeningBalance/Show', [
+            'openingBalance' => $openingBalance,
+
+        ]);
     }
 
     /**

@@ -1,6 +1,7 @@
 "use client"
 
 import { Head, useForm } from "@inertiajs/react"
+import { route } from "ziggy-js"
 import { Button } from "@/components/ui/button"
 import AppLayout from "@/layouts/app-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -17,6 +18,7 @@ interface OpeningBalanceEditProps {
 }
 
 export default function OpeningBalanceEdit({
+  openingBalanceId,
   openingBalance,
   subLedgerHeads,
 }: OpeningBalanceEditProps) {
@@ -24,9 +26,9 @@ export default function OpeningBalanceEdit({
     rows:
       openingBalance && openingBalance.length > 0
         ? openingBalance.map((row) => ({
-            sub_ledger_head_id: row.sub_ledger_head_id || "",
-            debit: row.debit || "",
-            credit: row.credit || "",
+            sub_ledger_head_id: String(row.sub_ledger_head_id || ""),
+            debit: String(row.debit || ""),
+            credit: String(row.credit || ""),
             id: row.id,
           }))
         : [{ sub_ledger_head_id: "", debit: "", credit: "" }],
@@ -53,7 +55,7 @@ export default function OpeningBalanceEdit({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    put(route("opening-balance.update",openingBalance.id ))
+    put(route("opening-balance.update", openingBalance))
   }
 
   const breadcrumbs: BreadcrumbItem[] = [
@@ -74,21 +76,21 @@ export default function OpeningBalanceEdit({
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="overflow-x-auto">
-                <table className="w-full border border-gray-200">
-                  <thead className="bg-gray-100">
+                <table className="w-full border border-border">
+                  <thead className="bg-muted/50">
                     <tr>
-                      <th className="p-2 text-left">Account Head</th>
-                      <th className="p-2 text-left">Debit</th>
-                      <th className="p-2 text-left">Credit</th>
+                      <th className="p-2 text-left text-foreground">Account Head</th>
+                      <th className="p-2 text-left text-foreground">Debit</th>
+                      <th className="p-2 text-left text-foreground">Credit</th>
                       <th className="p-2"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {data.rows.map((row, index) => (
-                      <tr key={index} className="border-b">
+                      <tr key={index} className="border-b border-border">
                         <td className="p-2">
                           <select
-                            className="w-full border rounded-md p-2"
+                            className="w-full border border-input bg-background text-foreground rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring"
                             value={row.sub_ledger_head_id}
                             onChange={(e) => handleChange(index, "sub_ledger_head_id", e.target.value)}
                           >
@@ -100,31 +102,31 @@ export default function OpeningBalanceEdit({
                             ))}
                           </select>
                           {errors[`rows.${index}.sub_ledger_head_id`] && (
-                            <p className="text-red-500 text-sm">{errors[`rows.${index}.sub_ledger_head_id`]}</p>
+                            <p className="text-destructive text-sm">{errors[`rows.${index}.sub_ledger_head_id`]}</p>
                           )}
                         </td>
                         <td className="p-2">
                           <input
                             type="number"
-                            className="w-full border rounded-md p-2"
+                            className="w-full border border-input bg-background text-foreground rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring"
                             placeholder="Dr. 0.00"
                             value={row.debit}
                             onChange={(e) => handleChange(index, "debit", e.target.value)}
                           />
                           {errors[`rows.${index}.debit`] && (
-                            <p className="text-red-500 text-sm">{errors[`rows.${index}.debit`]}</p>
+                            <p className="text-destructive text-sm">{errors[`rows.${index}.debit`]}</p>
                           )}
                         </td>
                         <td className="p-2">
                           <input
                             type="number"
-                            className="w-full border rounded-md p-2"
+                            className="w-full border border-input bg-background text-foreground rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring"
                             placeholder="Cr. 0.00"
                             value={row.credit}
                             onChange={(e) => handleChange(index, "credit", e.target.value)}
                           />
                           {errors[`rows.${index}.credit`] && (
-                            <p className="text-red-500 text-sm">{errors[`rows.${index}.credit`]}</p>
+                            <p className="text-destructive text-sm">{errors[`rows.${index}.credit`]}</p>
                           )}
                         </td>
                         <td className="p-2 flex gap-2">
@@ -141,10 +143,10 @@ export default function OpeningBalanceEdit({
                     ))}
                   </tbody>
                   <tfoot>
-                    <tr className="font-semibold bg-gray-50">
-                      <td className="p-2 text-right">Total</td>
-                      <td className="p-2">{`Dr. ${totalDebit.toFixed(2)}`}</td>
-                      <td className="p-2">{`Cr. ${totalCredit.toFixed(2)}`}</td>
+                    <tr className="font-semibold bg-muted/30">
+                      <td className="p-2 text-right text-foreground">Total</td>
+                      <td className="p-2 text-foreground">{`Dr. ${totalDebit.toFixed(2)}`}</td>
+                      <td className="p-2 text-foreground">{`Cr. ${totalCredit.toFixed(2)}`}</td>
                       <td></td>
                     </tr>
                   </tfoot>

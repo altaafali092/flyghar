@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Head, Link, router, usePage } from "@inertiajs/react"
+import { route } from "ziggy-js"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -28,7 +29,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ]
 
 export default function OpeningBalanceIndex() {
-    const { openingBalances } = usePage<{ openingBalances: OpeningBalanceProps }>().props
+    const { openingBalances } = usePage<{ openingBalances: PaginatedResponse<OpeningBalance> }>().props
     console.log(openingBalances)
 
     const [search, setSearch] = useState("")
@@ -47,7 +48,7 @@ export default function OpeningBalanceIndex() {
     
 
     const deleteOpeningBalance = (openingBalance: OpeningBalance) => {
-        if (!window.confirm("Are you sure you want to delete this shift?")) return
+        if (!window.confirm("Are you sure you want to delete this opening balance?")) return
         router.delete(route("opening-balance.destroy", openingBalance.id),
             { preserveScroll: true })
     }
@@ -124,7 +125,7 @@ export default function OpeningBalanceIndex() {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right space-x-2">
-                                                <Link href={route("sub-ledger-heads.show", openingBalance.id)}>
+                                <Link href={route("opening-balance.show", openingBalance.id)}>
                                                     <Button size="icon" variant="outline"><Eye className="w-4 h-4" /></Button>
                                                 </Link>
                                                 <Link href={route("opening-balance.edit", openingBalance.id)}>
@@ -143,8 +144,8 @@ export default function OpeningBalanceIndex() {
                                     ))
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="text-center text-muted-foreground">
-                                            No shifts found.
+                                        <TableCell colSpan={10} className="text-center text-muted-foreground">
+                                            No opening balances found.
                                         </TableCell>
                                     </TableRow>
                                 )}

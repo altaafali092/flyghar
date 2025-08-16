@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\GeneralSettings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GeneralSettings\OfficeSetting\StoreOfficeSettingRequest;
+use App\Http\Requests\GeneralSettings\OfficeSetting\UpdateOfficeSettingRequest;
 use App\Http\Resources\GeneralSettings\OfficeSettingResource;
 use App\Models\GeneralSetting\FiscalYear;
 use App\Models\GeneralSetting\OfficeSetting;
@@ -63,5 +64,20 @@ class OfficeSettingController extends Controller
             ->with('success', 'Office Setting Updated Successfully');
     }
 
-   
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateOfficeSettingRequest $request, OfficeSetting $officeSetting)
+    {
+        $officeSetting->update(checkFileExists($request->validated(), [
+            'office_image' => null,
+            'office_cover' => null
+        ]));
+
+        Cache::forget('office_setting');
+        return to_route('office-settings.index')
+            ->with('success', 'Office Setting Updated Successfully');
+    }
+
+
 }

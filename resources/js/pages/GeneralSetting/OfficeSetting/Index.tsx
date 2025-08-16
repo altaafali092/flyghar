@@ -25,7 +25,7 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
     const isEdit = Boolean(officeSetting?.id)
     useFlashToast()
 
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, put, processing, errors } = useForm({
         fiscal_year_id: officeSetting.fiscal_year_id || "",
         office_name: officeSetting.office_name || "",
         office_gmail: officeSetting.office_gmail || "",
@@ -40,7 +40,12 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        post(route("office-settings.store"), { forceFormData: true })
+
+        if (isEdit) {
+            put(route("office-settings.update", officeSetting.id), { forceFormData: true })
+        } else {
+            post(route("office-settings.store"), { forceFormData: true })
+        }
     }
 
     return (
@@ -162,61 +167,61 @@ export default function OfficeSettingForm({ officeSetting, fiscalYear }: Props) 
 
                                 <div>
                                     <Label htmlFor="office_gmail">Email <span className="text-red-500">*</span></Label>
-                                    <Input 
-                                        id="office_gmail" 
-                                        type="email" 
-                                        value={data.office_gmail} 
-                                        onChange={(e) => setData("office_gmail", e.target.value)} 
+                                    <Input
+                                        id="office_gmail"
+                                        type="email"
+                                        value={data.office_gmail}
+                                        onChange={(e) => setData("office_gmail", e.target.value)}
                                     />
                                     {errors.office_gmail && <p className="text-sm text-red-500">{errors.office_gmail}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="office_phone">Phone <span className="text-red-500">*</span></Label>
-                                    <Input 
-                                        id="office_phone" 
-                                        value={data.office_phone} 
-                                        onChange={(e) => setData("office_phone", e.target.value)} 
+                                    <Input
+                                        id="office_phone"
+                                        value={data.office_phone}
+                                        onChange={(e) => setData("office_phone", e.target.value)}
                                     />
                                     {errors.office_phone && <p className="text-sm text-red-500">{errors.office_phone}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="office_address">Address <span className="text-red-500">*</span></Label>
-                                    <Input 
-                                        id="office_address" 
-                                        value={data.office_address} 
-                                        onChange={(e) => setData("office_address", e.target.value)} 
+                                    <Input
+                                        id="office_address"
+                                        value={data.office_address}
+                                        onChange={(e) => setData("office_address", e.target.value)}
                                     />
                                     {errors.office_address && <p className="text-sm text-red-500">{errors.office_address}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="fb_url">Facebook</Label>
-                                    <Input 
-                                        id="fb_url" 
-                                        value={data.fb_url} 
-                                        onChange={(e) => setData("fb_url", e.target.value)} 
+                                    <Input
+                                        id="fb_url"
+                                        value={data.fb_url}
+                                        onChange={(e) => setData("fb_url", e.target.value)}
                                     />
                                     {errors.fb_url && <p className="text-sm text-red-500">{errors.fb_url}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="insta_url">Instagram</Label>
-                                    <Input 
-                                        id="insta_url" 
-                                        value={data.insta_url} 
-                                        onChange={(e) => setData("insta_url", e.target.value)} 
+                                    <Input
+                                        id="insta_url"
+                                        value={data.insta_url}
+                                        onChange={(e) => setData("insta_url", e.target.value)}
                                     />
                                     {errors.insta_url && <p className="text-sm text-red-500">{errors.insta_url}</p>}
                                 </div>
 
                                 <div>
                                     <Label htmlFor="youtube_url">YouTube</Label>
-                                    <Input 
-                                        id="youtube_url" 
-                                        value={data.youtube_url} 
-                                        onChange={(e) => setData("youtube_url", e.target.value)} 
+                                    <Input
+                                        id="youtube_url"
+                                        value={data.youtube_url}
+                                        onChange={(e) => setData("youtube_url", e.target.value)}
                                     />
                                     {errors.youtube_url && <p className="text-sm text-red-500">{errors.youtube_url}</p>}
                                 </div>
