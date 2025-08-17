@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin\Others;
 
+use App\Enums\GroupTypeEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Others\ImpContactResource;
 use App\Models\Others\ImpContact;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,7 +18,7 @@ class ImpContactController extends Controller
     {
         $importantContacts = ImpContact::latest()->paginate(10);
         return Inertia::render('others/ImportantCall/Index', [
-            'importantContacts' => $importantContacts,
+            'importantContacts' => ImpContactResource::collection($importantContacts)->response()->getData(true)
         ]);
     }
 
@@ -25,7 +27,9 @@ class ImpContactController extends Controller
      */
     public function create()
     {
-        //
+       return Inertia::render('others/ImportantCall/Create',[
+        'groupTypes'=> GroupTypeEnum::labels(),
+       ]);
     }
 
     /**
